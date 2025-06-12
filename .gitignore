@@ -1,0 +1,5 @@
+.import
+logs/
+.godot/**/*
+.godot/*
+.godot/
