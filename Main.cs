@@ -7,7 +7,13 @@ public partial class Main : Node
 	private PackedScene _mobScene { get; set; }
 	
 	private PathFollow3D _mobSpawnLocation;
+	private Timer _mobTimer;
 	private Player _player;
+	
+	private void OnPlayerHit()
+	{
+		_mobTimer.Stop();
+	}
 	
 	private void OnMobTimerTimeout()
 	{
@@ -23,6 +29,7 @@ public partial class Main : Node
 	{
 		_player = GetNode<Player>("Player");
 		_mobSpawnLocation = GetNode<PathFollow3D>("SpawnPath/SpawnLocation");
+		_mobTimer = GetNode<Timer>("MobTimer");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

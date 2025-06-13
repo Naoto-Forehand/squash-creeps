@@ -15,9 +15,23 @@ public partial class Player : CharacterBody3D
 	[Export]
 	private int _bounceImpulse { get; set; } = 16;
 	
+	[Signal]
+	public delegate void HitEventHandler();
+	
 	private Vector3 _targetVelocity = Vector3.Zero;
 	
 	private Node3D _pivot;
+	
+	private void Die()
+	{
+		EmitSignal(SignalName.Hit);
+		QueueFree();
+	}
+	
+	private void GameOver()
+	{
+		Die();
+	}
 	
 	public override void _Ready()
 	{
