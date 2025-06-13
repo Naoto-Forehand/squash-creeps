@@ -24,12 +24,14 @@ public partial class Player : CharacterBody3D
 	
 	private void Die()
 	{
+		GD.Print("Emit Signal For player hit");
 		EmitSignal(SignalName.Hit);
 		QueueFree();
 	}
 	
-	private void GameOver()
+	public void GameOver(Node3D body)
 	{
+		GD.Print("HIT");
 		Die();
 	}
 	
