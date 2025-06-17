@@ -11,6 +11,8 @@ public partial class Mob : CharacterBody3D
 	[Signal]
 	public delegate void SquashedEventHandler();
 	
+	private AnimationPlayer _animationPlayer;
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		MoveAndSlide();
@@ -18,12 +20,14 @@ public partial class Mob : CharacterBody3D
 	
 	public void Initialize(Vector3 startPosition, Vector3 playerPosition)
 	{
+		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		LookAtFromPosition(startPosition, playerPosition, Vector3.Up);
 		RotateY((float)GD.RandRange((-Mathf.Pi / 4f), (Mathf.Pi / 4f)));
 		
 		int randomSpeed = GD.RandRange(_minSpeed, _maxSpeed);
 		Velocity = Vector3.Forward * randomSpeed;
 		Velocity = Velocity.Rotated(Vector3.Up, Rotation.Y);
+		_animationPlayer.SpeedScale = randomSpeed / _minSpeed;
 	}
 	
 	public void Squash()
