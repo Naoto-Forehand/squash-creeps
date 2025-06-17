@@ -21,6 +21,7 @@ public partial class Player : CharacterBody3D
 	private Vector3 _targetVelocity = Vector3.Zero;
 	
 	private Node3D _pivot;
+	private AnimationPlayer _animationPlayer;
 	
 	private void Die()
 	{
@@ -38,6 +39,7 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{
 		_pivot = GetNode<Node3D>("Pivot");
+		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -65,6 +67,11 @@ public partial class Player : CharacterBody3D
 		{
 			direction = direction.Normalized();
 			_pivot.Basis = Basis.LookingAt(direction);
+			_animationPlayer.SpeedScale = 4;
+		}
+		else
+		{
+			_animationPlayer.SpeedScale = 1;
 		}
 		
 		_targetVelocity.X = direction.X * _speed;
@@ -97,5 +104,6 @@ public partial class Player : CharacterBody3D
 		
 		Velocity = _targetVelocity;
 		MoveAndSlide();
+		_pivot.Rotation = new Vector3((Mathf.Pi / 6f * Velocity.Y / _jumpImpulse), _pivot.Rotation.Y, _pivot.Rotation.Z);
 	}
 }
